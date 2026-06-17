@@ -1,0 +1,12 @@
+{
+  "name": "sefaz-proxy",
+  "version": "1.0.0",
+  "description": "Proxy Relay para mTLS SEFAZ",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
