@@ -77,7 +77,14 @@ const server = http.createServer((req, res) => {
           cert: certPem,
           key: keyPem,
           headers: {
-            'Content-Type': 'application/soap+xml;charset=UTF-8',
+            // CORRECAO RAIZ: SOAP 1.2 (usado pelo CT-e e tambem pelo NF-e neste
+            // projeto) exige o "action" embutido no Content-Type, nao apenas
+            // como header SOAPAction solto (isso e SOAP 1.1). O .asmx do CT-e
+            // valida isso de forma estrita e rejeita com "Unable to handle
+            // request without a valid action parameter" quando falta.
+            // Mantemos o header SOAPAction tambem, por retrocompatibilidade
+            // com qualquer endpoint que ainda espere o formato SOAP 1.1.
+            'Content-Type': 'application/soap+xml;charset=UTF-8;action="' + soapAction + '"',
             'SOAPAction': soapAction,
             'Content-Length': Buffer.byteLength(body)
           },
